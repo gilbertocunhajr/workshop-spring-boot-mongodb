@@ -38,7 +38,7 @@ public class UserResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> isert(@RequestBody UserDto objDto) {
+	public ResponseEntity<Void> insert(@RequestBody UserDto objDto) {
 		User obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -51,5 +51,12 @@ public class UserResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody UserDto objDto, @PathVariable String id) {
+		User obj = service.fromDTO(objDto);
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
 
 }
